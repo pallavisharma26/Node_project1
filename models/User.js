@@ -24,13 +24,8 @@ const UserSchema = new mongoose.Schema({
     password: {
       type: String,
       required: true
-    },
-    conformPassword :
-    {
-      type: String,
-      required: true
-
     }
+    
     
   });
   

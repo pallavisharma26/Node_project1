@@ -4,28 +4,59 @@ const mongoose = require('mongoose');
 const assert= require('assert');
 const bodyParser = require('body-parser');
 const path = require('path');
+const nodemailer = require("nodemailer");
+const bcrypt = require('bcryptjs');
+
 
 const app = express();
 
-// initialise middleware
+const publicDirectoryPath = path.join(__dirname,'./public')
+const viewsPath = path.join(__dirname,'./templates/views')
 
+// initialise middleware
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 
+// EJS
+app.use(express.static(publicDirectoryPath));
+
+app.set('views',viewsPath);
+
+
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+
+
+
+
 //connect to databse
 const db = require('./config/connectDB').MongoURI;
+
+app.get("/", (req, res)=>{
+  res.render("sign_up")
+  console.log(viewsPath);
+});
+
 
 mongoose
 .connect(
   
   db,
-  { useNewUrlParser: true ,useUnifiedTopology: true}
+  { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+    
+}
 
 )
 .then(() => console.log('MongoDB Connected....'))
 .catch(err => console.log(err));
+//ROUTES
+app.use('/users', require('./routes/users'));
 
 
 //PORT CONNETION

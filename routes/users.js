@@ -3,22 +3,23 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
+
 const saltRounds = 10;
 
 
 const User = require('../models/User');
 
 
-
-
-
-
-router.post('/sign_up', (req,res,next) =>{ 
+router.get('/sign_up',
+ (req,res)=> {
+     res.render('sign_up')
+});
+router.post('sign_up', (req,res) =>{ 
 
     User.find({ email:req.body.email})
       .exec()
-      .then(User =>{
-          if(User.length>=1){
+      .then(user =>{
+          if(user.length>=1){
           return res.status(409).json(
           {
               message:'Email Already registred'
@@ -34,15 +35,15 @@ router.post('/sign_up', (req,res,next) =>{
              });
          }
          else{
-            const User = new User({
-           // id:new Mongoose.prototype.ObjectID(),
+            const user = new User({
+            id:new Mongoose.prototype.ObjectID(),
             name :req.body.name, 
             contactNumber :req.body.contactNumber, 
             email :req.body.email,
             password:hash
 
          });
-         User.save()
+         user.save()
          .then(result =>
             {
                 console.log(result);
@@ -64,7 +65,7 @@ router.post('/sign_up', (req,res,next) =>{
 
     });
 });
-router.delete("/", (req, res, next) => {
+router.delete("/userID", (req, res, next) => {
     User.remove({ _id: req.params.userId })
       .exec()
       .then(result => {
