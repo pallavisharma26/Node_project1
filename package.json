@@ -25,6 +25,7 @@
     "express-validator": "^6.6.1",
     "mongoose": "^5.10.9",
     "nodemailer": "^6.4.14",
-    "nodemailer-mailgun-transport": "^2.0.1"
+    "nodemailer-mailgun-transport": "^2.0.1",
+    "otp-generator": "^2.0.0"
   }
 }

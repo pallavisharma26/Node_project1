@@ -7,12 +7,7 @@ const UserSchema = new mongoose.Schema({
       required: true,
       
     },
-    contactNumber:
-    {
-        type:Number,
-        required: true,
-        
-    },
+    
     email: {
       type: String,
       required: true,
@@ -21,9 +16,12 @@ const UserSchema = new mongoose.Schema({
 
     
     },
-    password: {
+    
+      password: {
       type: String,
-      required: true
+      required: true,
+      select:false
+
     }
     
     

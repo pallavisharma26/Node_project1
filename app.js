@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const assert= require('assert');
 const bodyParser = require('body-parser');
 const path = require('path');
-const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs');
+
 
 
 const app = express();
@@ -31,12 +31,12 @@ app.set('view engine', 'ejs');
 
 
 
-//connect to databse
+
 const db = require('./config/connectDB').MongoURI;
 
 app.get("/", (req, res)=>{
   res.render("sign_up")
-  console.log(viewsPath);
+ 
 });
 
 
@@ -55,11 +55,11 @@ mongoose
 )
 .then(() => console.log('MongoDB Connected....'))
 .catch(err => console.log(err));
-//ROUTES
+
 app.use('/users', require('./routes/users'));
 
 
-//PORT CONNETION
+
 const PORT = process.env.PORT ||5000;
 
 app.listen(PORT,console.log(`Server started on port ${PORT}`));
